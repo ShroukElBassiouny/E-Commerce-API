@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const categoryRoutes = require("./routes/categoryRoutes");
+const subcategoryRoutes = require("./routes/subcategoryRoutes")
 const ApiError = require("./utils/apiError");
 const globalError = require("./middlewares/errorMeddleware");
 require("./config/db");
@@ -21,6 +22,7 @@ if (process.env.NODE_ENV === "development") {
 
 // Mount routes
 app.use("/api/v1", categoryRoutes);
+app.use("/api/v1", subcategoryRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
