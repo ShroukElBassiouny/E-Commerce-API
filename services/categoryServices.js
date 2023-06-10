@@ -4,11 +4,11 @@ const ApiError = require("../utils/apiError");
 const Category = require("../models/categoryModel");
 
 // @desc    Get list of categories
-// @route   GET /api/v1/categories
+// @route   GET /api/v1/categories/
 // @access  Public
 exports.getCategories = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 5;
+  const limit = req.query.limit * 1 || 20;
   const skip = (page - 1) * limit;
 
   const categories = await Category.find({}).skip(skip).limit(limit);
@@ -28,7 +28,7 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
 });
 
 // @desc    Create category
-// @route   POST  /api/v1/categories
+// @route   POST  /api/v1/categories/
 // @access  Private
 exports.createCategory = asyncHandler(async (req, res) => {
   const { name } = req.body;

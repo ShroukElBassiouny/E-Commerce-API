@@ -19,11 +19,11 @@ const {
 const router = express.Router({ mergeParams: true });
 
 router
-  .route("/subcategories")
+  .route("/")
   .get(createFilterObj,getSubCategories)
   .post(setCategoryIdToBody, createSubCategoryValidator, createSubCategory);
 router
-  .route("/subcategories/:id")
+  .route("/:id")
   .get(getSubCategoryValidator, getSubCategory)
   .put(updateSubCategoryValidator, updateSubCategory)
   .delete(deleteSubCategoryValidator, deleteSubCategory);

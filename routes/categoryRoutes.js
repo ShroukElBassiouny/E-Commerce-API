@@ -19,14 +19,14 @@ const subcategoriesRoute = require("./subcategoryRoutes");
 const router = express.Router();
 
 router
-  .route("/categories")
+  .route("/")
   .get(getCategories)
   .post(createCategoryValidator, createCategory);
 router
-  .route("/categories/:id")
+  .route("/:id")
   .get(getCategoryValidator, getCategory)
   .put(updateCategoryValidator, updateCategory)
   .delete(deleteCategoryValidator, deleteCategory);
-router.use("/categories/:categoryId", subcategoriesRoute);
+router.use("/:categoryId/subcategories", subcategoriesRoute);
 
 module.exports = router;

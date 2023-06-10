@@ -12,7 +12,7 @@ exports.setCategoryIdToBody = (req,res,next) => {
 };
 
 // @desc    Create Subcategory
-// @route   POST  /api/v1/subcategories
+// @route   POST  /api/v1/subcategories/
 // @access  Private
 exports.createSubCategory = asyncHandler(async (req, res) => {
   if (!req.body.category) req.body.category = req.params.categoryId;
@@ -35,11 +35,11 @@ exports.createFilterObj = (req,res, next) => {
   next();
 };
 // @desc    Get list of Subcategories
-// @route   GET /api/v1/subcategories
+// @route   GET /api/v1/subcategories/
 // @access  Public
 exports.getSubCategories = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 5;
+  const limit = req.query.limit * 1 || 20
   const skip = (page - 1) * limit;
   const subcategories = await SubCategory.find(req.fliterObject)
     .skip(skip)
