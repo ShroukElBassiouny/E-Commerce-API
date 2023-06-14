@@ -4,6 +4,7 @@ const brandSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      trim: true,
       require: [true, "Brand required"],
       unique: [true, "Brand must be unique"],
       minlength: [2, "Too short Brand name"],
@@ -11,6 +12,7 @@ const brandSchema = new mongoose.Schema(
     },
     slug: {
       type: String,
+      require: true,
       lowercase: true,
     },
     image: String,

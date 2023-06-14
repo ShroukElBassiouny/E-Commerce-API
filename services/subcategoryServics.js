@@ -6,7 +6,7 @@ const SubCategory = require("../models/subcategoryModel");
 // @desc    Create Subcategory on specific category
 // @route   POST  /api/v1/categories/categoryId/subcategories
 // @access  Private
-exports.setCategoryIdToBody = (req,res,next) => {
+exports.setCategoryIdToBody = (req, res, next) => {
   if (!req.body.category) req.body.category = req.params.categoryId;
   next();
 };
@@ -28,7 +28,7 @@ exports.createSubCategory = asyncHandler(async (req, res) => {
 // @desc    Get list of Subcategories for specific category
 // @route   GET /api/v1/categories/:categoryId/subcategories
 // @access  Public
-exports.createFilterObj = (req,res, next) => {
+exports.createFilterObj = (req, res, next) => {
   let fliterObject = {};
   if (req.params.categoryId) fliterObject = { category: req.params.categoryId };
   req.fliterObject = fliterObject;
@@ -39,12 +39,12 @@ exports.createFilterObj = (req,res, next) => {
 // @access  Public
 exports.getSubCategories = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 20
+  const limit = req.query.limit * 1 || 50;
   const skip = (page - 1) * limit;
   const subcategories = await SubCategory.find(req.fliterObject)
     .skip(skip)
     .limit(limit);
-  //.populate({ path: "Category", select: "name-_id" });
+  //.populate({ path: "category", select: "name -_id" });
   res
     .status(200)
     .json({ results: subcategories.length, page, data: subcategories });
@@ -57,8 +57,8 @@ exports.getSubCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const subcategory = await SubCategory.findById(id);
   /*.populate({
-    path: "Category",
-    select: "name-_id",
+    path: "category",
+    select: "name -_id",
   });*/
   if (!subcategory) {
     return next(new ApiError(`No Subcategory for this id ${id}`, 404));

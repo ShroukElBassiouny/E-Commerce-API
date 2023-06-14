@@ -2,10 +2,11 @@ const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const categoryRoutes = require("./routes/categoryRoutes");
-const subcategoryRoutes = require("./routes/subcategoryRoutes")
-const brandRoutes = require('./routes/brandRoutes')
+const subcategoryRoutes = require("./routes/subcategoryRoutes");
+const brandRoutes = require("./routes/brandRoutes");
 const ApiError = require("./utils/apiError");
 const globalError = require("./middlewares/errorMeddleware");
+const productRoutes = require("./routes/productRoutes");
 require("./config/db");
 
 dotenv.config({ path: "./config.env" });
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === "development") {
 app.use("/api/v1/categories", categoryRoutes);
 app.use("/api/v1/subcategories", subcategoryRoutes);
 app.use("/api/v1/brands", brandRoutes);
+app.use("/api/v1/products", productRoutes);
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));

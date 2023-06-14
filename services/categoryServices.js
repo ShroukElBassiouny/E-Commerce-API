@@ -8,7 +8,7 @@ const Category = require("../models/categoryModel");
 // @access  Public
 exports.getCategories = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 20;
+  const limit = req.query.limit * 1 || 50;
   const skip = (page - 1) * limit;
 
   const categories = await Category.find({}).skip(skip).limit(limit);

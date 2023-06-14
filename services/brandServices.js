@@ -8,7 +8,7 @@ const Brand = require("../models/brandModel");
 // @access  Public
 exports.getBrands = asyncHandler(async (req, res) => {
   const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 20;
+  const limit = req.query.limit * 1 || 50;
   const skip = (page - 1) * limit;
 
   const brands = await Brand.find({}).skip(skip).limit(limit);
