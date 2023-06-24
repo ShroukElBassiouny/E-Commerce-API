@@ -1,6 +1,7 @@
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
+const slugify = require("slugify");
 const validatorMiddleware = require("../../middlewares/validatorMiddleware");
-const Category = require('../../models/categoryModel')
+const Category = require("../../models/categoryModel");
 
 exports.getSubCategoryValidator = [
   check("id")
@@ -18,7 +19,11 @@ exports.createSubCategoryValidator = [
     .isLength({ min: 2 })
     .withMessage("Too short Subcategory name")
     .isLength({ max: 32 })
-    .withMessage("Too long Subcategory name"),
+    .withMessage("Too long Subcategory name")
+    .custom((val, { req }) => {
+      req.body.slug = slugify(val);
+      return true;
+    }),
   check("category")
     .notEmpty()
     .withMessage("Category id required")
@@ -42,6 +47,10 @@ exports.updateSubCategoryValidator = [
     .withMessage("Invalid Subcategory id format")
     .notEmpty()
     .withMessage("SubCategory id required"),
+  body("name").custom((val, { req }) => {
+    req.body.slug = slugify(val);
+    return true;
+  }),
   validatorMiddleware,
 ];
 
